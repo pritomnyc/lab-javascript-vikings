@@ -75,26 +75,55 @@ class Saxon extends Soldier {
 let Alfred = new Saxon(150, 40);
 console.log(Alfred.receiveDamage(Bjorn.attack()));
 
-// War
+// War bonus iteration
 class War {
   constructor() {
     this.vikingArmy = [];
     this.saxonArmy = [];
   }
-  addViking = (viking) => {
-    this.vikingArmy.push();
+  addViking = (v) => {
+    this.vikingArmy.push(v);
   };
 
-  addSaxon = (saxon) => {
-    this.saxonArmy.push();
+  addSaxon = (s) => {
+    this.saxonArmy.push(v);
   };
 
-  vikingAttack = () => {};
+  vikingAttack() {
+    let randomIndex = Math.floor(Math.random() * this.saxonArmy.length);
+    let randomSaxon = this.saxonArmy[randomIndex];
+    let randomViking =
+      this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
+    randomSaxon.receiveDamage(randomViking.attack());
+    if (randomSaxon.health <= 0) {
+      this.saxonArmy.splice(this.saxonArmy[(randomIndex, 1)]);
+    }
+  }
 
-  saxonAttack = () => {};
-
-  showStatus = () => {};
+  saxonAttack() {
+    let randomSaxon =
+      this.saxonArmy[Math.floor(Math.random() * this.saxonArmy.length)];
+    let randomViking =
+      this.vikingArmy[Math.floor(Math.random() * this.vikingArmy.length)];
+    return randomViking.receiveDamage(randomSaxon.attack());
+  }
+  // Super bonus
+  showStatus() {
+    if (this.saxonArmy.length === 0) {
+      return `Vikings have won the war of the century!`;
+    } else if (this.vikingArmy.length === 0) {
+      return `Saxons have fought for their lives and survived another day...`;
+    } else {
+      return `Vikings and Saxons are still in the thick of battle.`;
+    }
+  }
 }
+let fight = new War();
+fight.addViking(Bjorn);
+fight.addSaxon(Alfred);
+fight.saxonAttack();
+fight.vikingAttack();
+console.log(fight.showStatus());
 
 // The following is required to make unit tests work.
 /* Environment setup. Do not modify the below code. */
